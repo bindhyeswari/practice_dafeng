@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <div id="div1" name="name1">div1</div>
+    <div id="div2" name="name2">div2</div>
+    <div id="div3" name="name3">div3</div>
+    <div id="div4" name="name4">div4</div>
+    <div id="div5" name="name5">div5</div>
+    <div id="div6" name="name6">div6</div>
+    <div id="div7" name="name7">div7</div>
+
+    <p name="name1">p1</p>
+    <p name="name2">p2</p>
+    <p name="name3">p3</p>
+    <p name="name4">p4</p>
+    <p name="name5">p5</p>
+    <p name="name6">p6</p>
+
+    <span name='name1'>span1</span>
+    <span name='name2'>span2</span>
+    <span name='name3'>span3</span>
+    <span name='name4'>span4</span>
+    <span name='name5'>span5</span>
+
+    <a name="name1">a1</a>
+    <a name="name2">a2</a>
+    <a name="name3">a3</a>
+    <a name="name4">a4</a>
+
+    <iframe name="iframe1">iframe1</iframe>
+    <iframe name="iframe2">iframe2</iframe>
+
+    <form name="form"></form>
+    <script>
+        console.log("*********Test function arguments and id select***********" + '\n\r');
+        function getElements(arg1,arg2,arg3) {
+            var elements = {};
+            var array = [];
+            for (var i = 0; i < arguments.length; i++) {
+                var id = arguments[i];
+                console.log(id);
+                var elem = document.getElementById(id);
+                if (elem == null){
+                    console.log('OBJECT NOT FOUND');
+                }
+                else{
+                    console.log(elem);
+                }
+                elements[id] = elem;
+                array.push(elem);
+            }
+            /* Properties can only be accessed in this way,  */
+            console.log(elements[arg1]);
+            console.log(elements[arg2]);
+            console.log(elements[arg3]);
+            console.log(array.length);
+        }
+
+        getElements('div1','div2','div3');
+        getElements('div7','div8','div9');
+        console.log("********Test 4 ways of select************************");
+        function getAllElements(){
+            var idLen = document.getElementsByTagName('div');
+            console.log(idLen.length);
+
+            console.log('-----------Select by ids------------');
+            for(var i = 0; i < idLen.length;i++){
+                var idElem = document.getElementById('div' + (i + 1));
+                console.log(idElem);
+            }
+
+            console.log('-----------Select by names------------');
+            for(var i = 0; i < 6;i++){
+                var nameElem = document.getElementsByName('name' + (i + 1));
+                console.log(nameElem.length);
+            }
+
+            console.log('-----------Select all name 4 and inspect nodelist object------------')
+            var names = document.getElementsByName('name4');
+            console.log(names);
+            console.log(names.length);
+            console.log(typeof names);
+            for(var element in names){
+                console.log(names[element]);/*
+                console.log('NODETYPE' + element.nodeType);
+                console.log('NODEINNERHTML' +  element.innerHTML);*/
+                console.log('---element ends---');
+            }
+
+            console.log('-----------Windows object instead of element object-----------')
+
+            var iframe1 = document.iframe1;
+            console.log(iframe1);
+
+            var form = document.form;
+            console.log(form.nodeName);
+
+        }
+
+        getAllElements();
+    </script>
+</body>
+</html>
