@@ -20,11 +20,13 @@
     <p name="name5">p5</p>
     <p name="name6">p6</p>
 
-    <span name='name1'>span1</span>
-    <span name='name2'>span2</span>
-    <span name='name3'>span3</span>
-    <span name='name4'>span4</span>
-    <span name='name5'>span5</span>
+    <div id="spans">
+        <span name='name1'>span1</span>
+        <span name='name2'>span2</span>
+        <span name='name3'>span3</span>
+        <span name='name4'>span4</span>
+        <span name='name5'>span5</span>
+    </div>
 
     <a name="name1">a1</a>
     <a name="name2">a2</a>
@@ -35,11 +37,31 @@
     <iframe name="iframe2">iframe2</iframe>
 
     <form name="form"></form>
+
+    <div class="class1 div1"></div>
+    <div class="class2 div2"></div>
+    <div class="class3"></div>
+    <div class="class3"></div>
+
+
+    <p class="warning">This is a sample warning</p>
+    <p class="error">This is a sample error</p>
+    <div id="test">
+        <div>
+            <div>
+                <div id="grandchild"></div>
+            </div>
+        </div>
+    </div>
     <script>
+
         console.log("*********Test function arguments and id select***********" + '\n\r');
+
         function getElements(arg1,arg2,arg3) {
+
             var elements = {};
             var array = [];
+
             for (var i = 0; i < arguments.length; i++) {
                 var id = arguments[i];
                 console.log(id);
@@ -62,7 +84,9 @@
 
         getElements('div1','div2','div3');
         getElements('div7','div8','div9');
+
         console.log("********Test 4 ways of select************************");
+
         function getAllElements(){
             var idLen = document.getElementsByTagName('div');
             console.log(idLen.length);
@@ -81,9 +105,11 @@
 
             console.log('-----------Select all name 4 and inspect nodelist object------------')
             var names = document.getElementsByName('name4');
+
             console.log(names);
             console.log(names.length);
             console.log(typeof names);
+
             for(var element in names){
                 console.log(names[element]);/*
                 console.log('NODETYPE' + element.nodeType);
@@ -91,7 +117,7 @@
                 console.log('---element ends---');
             }
 
-            console.log('-----------Windows object instead of element object-----------')
+            console.log('-----------Windows object instead of element object-----------Doubt arise')
 
             var iframe1 = document.iframe1;
             console.log(iframe1);
@@ -99,9 +125,93 @@
             var form = document.form;
             console.log(form.nodeName);
 
+            console.log('-----------Get Elements by tagnames--------------');
+            var elems = document.getElementsByTagName('*');
+            console.log(elems.length);
+
+            console.log('-----children and nodes');
+            var spans = document.getElementById('spans');
+            var spanList = spans.children;
+            console.log(spanList.length);
+            console.log(spanList[2]);
+
+            var spanNodes = spans.childNodes;
+            console.log(spanNodes.length);
+            console.log(spanNodes[5]);
+
+            console.log('-----------Get Elements by CSS class--------------');
+            var div1 = document.getElementsByClassName('class1 div1');
+            var div2 = document.getElementsByClassName('div2 class2');
+            console.log(div1[0]);
+            console.log(div2.length);
+
+            console.log('-----------Get Elements by CSS selector----------');
+            var span = document.querySelector("#spans");
+            console.log(span);
+            var alerts = document.querySelectorAll("p.warning, p.error");
+            console.log(alerts);
+            console.log(alerts[0]);
+            console.log(alerts[1]);
+            var classes = document.querySelectorAll('.class3');
+            console.log(classes.length);
+            var singleclass = document.querySelector('.class3');
+            console.log(singleclass.length);
         }
 
         getAllElements();
+
+        console.log('-----------get prev----------');
+
+        function getPrev(elem){
+            do{
+                elem = elem.previousSibling;
+            }while(elem && elem.nodeType != 1);
+            return elem;
+        }
+
+        function getNext(elem){
+            do{
+                elem = elem.nextSibling;
+            }while(elem && elem.nodeType != 1);
+            return elem;
+        }
+
+        function getFirst(elem){
+            elem = elem.firstChild;
+            return elem && elem.nodeType != 1 ? getNext(elem):elem;
+        }
+
+        function getLast(elem){
+            elem = elem.lastChild;
+            return elem && elem.nodeType != 1 ? getPrev(elem):elem;
+        }
+
+        function getParent(elem,num){
+            num = num || 1;
+            for(var i = 0; i < num; i++){
+                if(elem != null){
+                    elem = elem.parentNode;
+                }
+            }
+            return elem;
+        }
+        var node = document.getElementById('div1');
+
+        var res = getPrev(node);
+        console.log(res);
+
+        var res = getNext(node);
+        console.log(res);
+
+        var res = getFirst(node);
+        console.log(res);
+
+        var res = getLast(node);
+        console.log(res);
+
+        var grandchild = document.getElementById('grandchild');
+        var res = getParent(grandchild,2);
+        console.log(res);
     </script>
 </body>
 </html>
