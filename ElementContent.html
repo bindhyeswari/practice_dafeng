@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <p>This is a <i>simple</i> content.</p>
+
+    <div id="div">This is an div element.</div>
+
+    <div id="div2">
+        <div>
+            Another div.
+        </div>
+    </div>
+
+    <div id="div3">
+        div
+        <div>
+            div2
+            <div>
+                div3
+            </div>
+        </div>
+    </div>
+
+    <div id="div4">div<div>div2<div>div3</div></div></div>
+
+    <script>
+        var nodeList = document.body.childNodes;
+        var len = nodeList.length;
+
+        console.log(len);
+
+        for(var i = 0;i < len;i++){
+            console.log(i);
+            console.log(nodeList[i].nodeName);
+            console.log('***');
+        }
+
+        console.log('******************');
+
+        var div = document.getElementById('div');
+        console.log(div.innerHTML);
+        console.log(div.outerHTML);
+        console.log(div.textContent);
+
+        console.log('******************');
+
+        var div2 = document.getElementById('div2');
+        console.log(div2.textContent);
+        console.log(div2.innerHTML);
+        console.log(div2.innerText);
+
+        console.log('******************');
+        var div3 = document.getElementById('div3');
+        console.log(div3.textContent);
+        console.log(div3.innerHTML);
+        console.log(div3.innerText);
+
+        console.log('******************String:');
+
+        function textContent(e){
+            var child,type,s = "";
+            for(child = e.firstChild;child != null; child = child.nextSibling){
+                type = child.nodeType;
+
+                if(type === 3 || type === 4){
+                    s += child.nodeValue;
+                }
+                else if(type === 1){
+                    s += textContent(child);
+                }
+            }
+            return s;
+        }
+
+        var div4 = document.getElementById('div4');
+        console.log(textContent(div3));
+        console.log(textContent(div4));
+
+    </script>
+</body>
+</html>
