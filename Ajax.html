@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body{
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-flow: column;
+        }
+
+        .progress{
+            width: 30%;
+            height: 10px;
+            background-color: aliceblue;
+            border-radius: 50px;
+        }
+
+        .progress > div{
+            width: 0 ;
+            height: 100%;
+            background-color: blue;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('submit').addEventListener('click',function(){
+                var inputUrl = document.getElementById('inputUrl');
+                var url = inputUrl.value;
+
+
+                /* 'http://uitr.herokuapp.com/countries'; */
+
+                makeAjaxCall(url,function(xhr){
+                    console.log('CALL BACK FUNCTIONS:')
+                    console.log(xhr);
+                    console.log('TEST IF BROWER SUPPORT EVENT');
+                    /* Chapter 18.1.4 Start*/
+                    if('onprogress' in  (new XMLHttpRequest())){
+                        console.log('Progress is supported');
+                    }
+                });
+            });
+
+            document.getElementById('submitFile').addEventListener('click',function(){
+
+                var inputFile = document.getElementById('inputFile');
+                var files = inputFile.files;
+                console.log(files.length);
+                console.log(Object.getOwnPropertyNames(files).length);
+                var i = 0;
+                /* if implement var each in files: 3 more attr arises which are item, @@iterator, length */
+                for(var i = 0; i < files.length; i++){
+                    console.log('files[i].type: ' + files[i].type);
+                }
+            });
+
+            function makeAjaxCall(url,callback){
+
+                var xhr = new XMLHttpRequest();
+                var req3 = 0;
+
+                xhr.addEventListener('readystatechange',function(){
+                    console.log('readyState :' + xhr.readyState + ' , status: '  + xhr.status);
+                    console.log('statusText: ' + xhr.statusText);
+                    console.log('type: ' + xhr.getResponseHeader('Content-Type'));
+
+                    console.log('response text: ' + xhr.responseText.length);
+                    console.log('Type: ' + xhr.responseType);
+                    console.log('XML:' + xhr.responseXML);
+
+                    if(xhr.readyState === 2 && xhr.status === 200){
+
+                    }
+
+                    if(xhr.readyState === 3){
+                        req3++;
+                        console.log('header Length:' + xhr.getAllResponseHeaders().length);
+                        var headers = xhr.getAllResponseHeaders();
+                        var text = xhr.responseText;
+                        console.log(text);
+                        console.log('***********************head starts ');
+                        /*var header = headers.split('\n');
+
+                        for(var i = 0;i < header.length;i++){
+                            console.log(header[i]);
+                        }
+                        console.log(headers);*/
+
+                        console.log(xhr.getResponseHeader('Content-Length'));
+                        console.log('***********************head ends');
+                    }
+
+                    if(xhr.readyState === 4 && xhr.status === 200){
+                        console.log('req3************' + req3);
+                        callback(xhr.responseText);
+                    }
+                    console.log('***');
+                });
+
+                xhr.addEventListener('progress',function(e){
+                    var container = document.getElementsByClassName('progress')[0];
+                    var progress = container.getElementsByTagName('div')[0];
+
+                    progress.style.width = e.loaded / e.total * 100 + '%';
+
+                    /*console.log('progress change');
+                     console.log(e.loaded);
+                     console.log(e.total);
+                     console.log('#######');*/
+                });
+                /*  xhr.open('GET','http://www.nyu.edu') or google, Error arise:
+                 Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote
+                 resource at http://www.nyu.edu/. This can be fixed by moving the resource to the
+                 same domain or enabling CORS. */
+                /*
+                 xhr.open('GET','CSS.pdf',false);
+                 The last length of segment of file:
+                 console.log(xhr.responseText.length);
+                 */
+                /*xhr.open('GET','CSS.pdf');*/
+                xhr.open('GET',url);
+                xhr.send();
+            }
+        });
+    </script>
+</head>
+<body>
+    <code>
+        upload select:
+    </code>
+
+    <input type="text" id="inputUrl" multiple>
+
+    <button id="submit">Submit</button>
+
+    <input type="file" id="inputFile" multiple>
+
+    <button id="submitFile">Submit File</button>
+
+    <div class="progress">
+        <div></div>
+    </div>
+</body>
+</html>
