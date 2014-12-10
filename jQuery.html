@@ -10,8 +10,10 @@
             /* select all elements */
             $(':visible').each(function(elem){
                 /*console.log($(this));*/
-                console.log('INDEX: ' + elem + ', type is: ' + $(this)
-                    + '. Inside content: ' + $(this).tagName
+                console.log('INDEX: ' + elem + ', type is: ' /*+ $(this)*/
+                        /* + 'Inside content: ' + $(this).text()*/
+                        + '. Val: ' + $(this).val()
+                        /*+ '. HTML: ' + $(this).html()*/
                 );
             });
 
@@ -39,7 +41,14 @@
                 console.log('name contains selector~: ' + $('[name~="form"]').length);
                 console.log('name = form1^.length: ' + $('[name^="form"]').length);
                 console.log('name ends selector: ' + $('[name="form"]').length);
+
+                console.log('\n');
+                console.log('has attribute value: ' + $('[value]').length);
             });
+
+            console.log('children selector');
+            /* children selector */
+            console.log($('#Sibling:first-child').text());
         });
 
     </script>
@@ -62,7 +71,7 @@
     <p>This is a paragraph.</p>
     <p>This is another paragraph.</p>
 
-    <div>
+    <div id="Sibling">
         <p id="testSibling">sibling1</p>
         <p>sibling2</p>
         <p>sibling3</p>
