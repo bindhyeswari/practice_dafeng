@@ -49,6 +49,12 @@
             console.log('children selector');
             /* children selector */
             console.log($('#Sibling:first-child').text());
+
+            /* Content Selector */
+            console.log('Content selector');
+            $(':contains(heading)').each(function(){
+                console.log($(this).text());
+            });
         });
 
     </script>
