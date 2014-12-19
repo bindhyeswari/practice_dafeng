@@ -29,12 +29,18 @@
                 console.log('testFunctionWithReturnValues FUNCTION: ' + ( testFunctionWithReturnValues() == undefined))
                 console.log(typeof objs);
                 console.log(objs instanceof Array);
-                console.log(objs.isArray);
+                /*console.log(objs.isArray); //wrong syntax*/
+                console.log(Array.isArray(objs));
 
+                var divs = document.getElementsByTagName('div');
+                console.log(divs instanceof HTMLCollection);
             });
         });
     </script>
 </head>
 <body>
+    <div>id1</div>
+    <div>id2</div>
+    <div>id3</div>
 </body>
 </html>
